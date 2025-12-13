@@ -3,29 +3,43 @@ import { Finput } from "./components/Finput";
 import { defaultFormValues, FormInputs } from "./data/FormInputs";
 import { useState } from "react";
 import { Fmodal } from "./components/Fmodal";
-import type { FormValues } from "./interfaces";
+import type { IFormValues } from "./interfaces";
 import { Fcard } from "./components/Fcard";
 import { v4 as uuid } from "uuid";
+import { FormValidation } from "./utils/FormValidition";
+import InputError from "./components/InputError";
+import { Fselect } from "./components/Fselect";
 
 export default function App() {
   /* Global State */
   const [FormValus, setFormValus] = useState(defaultFormValues);
-  const [Contacts, SetContacts] = useState<FormValues[]>([]);
-
+  const [Contacts, SetContacts] = useState<IFormValues[]>([]);
+  const [errorsArray, setErrorsArray] =
+    useState<IFormValues>(defaultFormValues);
   /* Renders Inputs  */
   const InputsRender = FormInputs.map((input) => (
-    <Finput
-      key={input.id}
-      {...input}
-      value={FormValus[input.id as keyof typeof FormValus]}
-      onChange={(e) => {
-        setFormValus({
-          ...FormValus,
-          [e.target.name]: e.target.value,
-        });
-      }}
-    />
+    <div key={input.id}>
+      <Finput
+        className={
+          errorsArray[input.id as keyof typeof errorsArray]
+            ? "rounded-lg border-1 border-red-500"
+            : ""
+        }
+        {...input}
+        value={FormValus[input.id as keyof typeof FormValus] as string}
+        onChange={(e) => {
+          setFormValus({
+            ...FormValus,
+            [e.target.name]: e.target.value,
+          });
+        }}
+      />
+      <InputError>
+        {errorsArray[input.id as keyof typeof errorsArray] as string}
+      </InputError>
+    </div>
   ));
+
   /* Renders Contacts  */
   const ContactsRender =
     Contacts.length === 0 ? (
@@ -52,6 +66,13 @@ export default function App() {
     );
 
   function handleFormSubmit() {
+    const errors = FormValidation(FormValus);
+    setErrorsArray(errors);
+    console.log(errors);
+
+    const isError = Object.values(errors).some((error) => error !== "");
+    if (isError) return true;
+
     SetContacts([{ ...FormValus, id: uuid() }, ...Contacts]);
     setFormValus(defaultFormValues);
 
@@ -84,10 +105,24 @@ export default function App() {
           title="New Entry"
           setOpenModalFn={() => {
             setFormValus(defaultFormValues);
+            setErrorsArray(defaultFormValues);
             return false;
           }}
         >
           {InputsRender}
+          <Fselect
+            onChange={(e) => {
+              setFormValus({
+                ...FormValus,
+                role: e.target.value,
+              });
+            }}
+            error={errorsArray.role as string}
+            id="role"
+            name="role"
+            label="Role"
+            options={["admin", "user", "guest"]}
+          />
         </Fmodal>
         <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
           {ContactsRender}

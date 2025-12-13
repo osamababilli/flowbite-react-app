@@ -9,10 +9,11 @@ export interface FinputProps extends React.InputHTMLAttributes<HTMLInputElement>
   name: keyof typeof defaultFormValues;
 }
 
-export interface FormValues {
-  id: string;
+export interface IFormValues {
+  id?: string;
   name: string;
   email: string;
   age: string;
   password: string;
+  role: string[] | string;
 }

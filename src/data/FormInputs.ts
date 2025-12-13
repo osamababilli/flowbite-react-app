@@ -19,7 +19,7 @@ export const FormInputs: FinputProps[] = [
   },
   {
     id: "age",
-    type: "text",
+    type: "Number",
     placeholder: "Please Enter Age",
     require: true,
     name: "age",
@@ -40,4 +40,5 @@ export const defaultFormValues = {
   email: "",
   age: "",
   password: "",
+  role: "",
 };
