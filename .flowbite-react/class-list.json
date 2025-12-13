@@ -1,4 +1,5 @@
 [
+  "-m-1.5",
   "2xl",
   "3xl",
   "4xl",
@@ -158,6 +159,7 @@
   "dark:text-cyan-500",
   "dark:text-cyan-600",
   "dark:text-gray-400",
+  "dark:text-gray-500",
   "dark:text-green-500",
   "dark:text-indigo-400",
   "dark:text-lime-500",
@@ -171,6 +173,7 @@
   "dark:text-yellow-600",
   "disabled:cursor-not-allowed",
   "disabled:opacity-50",
+  "ease-out",
   "first:border-l",
   "first:rounded-s-lg",
   "fixed",
@@ -271,6 +274,7 @@
   "max-w-md",
   "max-w-sm",
   "max-w-xl",
+  "max-w-xs",
   "md:flex-row",
   "md:h-auto",
   "md:h-full",
@@ -281,6 +285,7 @@
   "md:w-48",
   "ml-auto",
   "object-cover",
+  "opacity-0",
   "opacity-50",
   "overflow-auto",
   "overflow-x-hidden",
@@ -319,6 +324,7 @@
   "shadow-md",
   "shadow-sm",
   "shadow-xs",
+  "shrink-0",
   "sm:text-base",
   "sm:text-xs",
   "space-x-2",
@@ -355,6 +361,7 @@
   "top-left",
   "top-right",
   "w-5",
+  "w-8",
   "w-full",
   "z-50"
 ]
