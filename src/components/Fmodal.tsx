@@ -7,44 +7,42 @@ import {
   ModalFooter,
   ModalHeader,
 } from "flowbite-react";
-import { useState } from "react";
 
 interface FmodalProps {
   children?: React.ReactNode;
-  setOpenModalFn: () => boolean;
-  saveFn: () => boolean;
+  open: boolean;
+  onClose: () => void;
+  saveFn: () => void;
   title: string;
 }
 
 export function Fmodal({
   children,
-  setOpenModalFn,
+  open,
+  onClose,
   title,
   saveFn,
 }: FmodalProps) {
-  const [openModal, setOpenModal] = useState(false);
-
   return (
-    <>
-      <Button onClick={() => setOpenModal(true)}>Open New Entry Form</Button>
-      <Modal show={openModal} onClose={() => setOpenModal(false)}>
-        <ModalHeader>{title}</ModalHeader>
-        <ModalBody>{children}</ModalBody>
-        <ModalFooter>
-          <Button className="w-full" onClick={() => setOpenModal(saveFn)}>
-            Save
-          </Button>
-          <Button
-            className="w-full"
-            color="alternative"
-            onClick={() => {
-              setOpenModal(setOpenModalFn);
-            }}
-          >
-            cancel
-          </Button>
-        </ModalFooter>
-      </Modal>
-    </>
+    <Modal show={open} onClose={onClose}>
+      <ModalHeader>{title}</ModalHeader>
+
+      <ModalBody>{children}</ModalBody>
+
+      <ModalFooter>
+        <Button
+          className="w-full"
+          onClick={() => {
+            saveFn();
+          }}
+        >
+          Save
+        </Button>
+
+        <Button className="w-full" color="alternative" onClick={onClose}>
+          Cancel
+        </Button>
+      </ModalFooter>
+    </Modal>
   );
 }
